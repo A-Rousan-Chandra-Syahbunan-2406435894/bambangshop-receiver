@@ -68,16 +68,16 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Implement list_all_as_string function in Notification repository.`
     -   [x] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 -   **STAGE 3: Implement services and controllers**
-    -   [ ] Commit: `Create Notification service struct skeleton.`
-    -   [ ] Commit: `Implement subscribe function in Notification service.`
-    -   [ ] Commit: `Implement subscribe function in Notification controller.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification service.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification controller.`
-    -   [ ] Commit: `Implement receive_notification function in Notification service.`
-    -   [ ] Commit: `Implement receive function in Notification controller.`
-    -   [ ] Commit: `Implement list_messages function in Notification service.`
-    -   [ ] Commit: `Implement list function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+    -   [x] Commit: `Create Notification service struct skeleton.`
+    -   [x] Commit: `Implement subscribe function in Notification service.`
+    -   [x] Commit: `Implement subscribe function in Notification controller.`
+    -   [x] Commit: `Implement unsubscribe function in Notification service.`
+    -   [x] Commit: `Implement unsubscribe function in Notification controller.`
+    -   [x] Commit: `Implement receive_notification function in Notification service.`
+    -   [x] Commit: `Implement receive function in Notification controller.`
+    -   [x] Commit: `Implement list_messages function in Notification service.`
+    -   [x] Commit: `Implement list function in Notification controller.`
+    -   [x] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -90,3 +90,10 @@ This is the place for you to write reflections:
 2. Penggunaan lazy_static ini ibarat bikin "variabel global yang pinter". Kita pakai ini biar database notifikasi (variabel NOTIFICATIONS) cuma dibuat satu kali di memori pas aplikasinya pertama kali jalan. Kalau nggak pake lazy_static, setiap ada request masuk, server mungkin bakal sibuk bikin instance database berulang-ulang dari awal yang ujungnya malah ngereset semua notifikasi yang udah kesimpen sebelumnya.
 
 #### Reflection Subscriber-2
+
+1. Saya mengeksplorasi file src/lib.rs untuk memahami cara aplikasi mengelola konfigurasi global dan klien HTTP menggunakan lazy_static!. Saya mempelajari bagaimana APP_CONFIG dan REQWEST_CLIENT diinisialisasi sekali untuk digunakan di seluruh layanan. Selain itu, saya juga mempelajari implementasi penanganan error kustom melalui fungsi compose_error_response agar pesan error yang dikirim kembali melalui Rocket menjadi seragam dan lebih informatif.
+
+2. Pola Observer sangat memudahkan penambahan subscriber baru karena adanya decoupling antara Publisher dan Receiver. Publisher tidak perlu mengetahui detail internal tiap Receiver, melainkan hanya membutuhkan daftar URL untuk mengirimkan notifikasi.
+Jika terdapat lebih dari satu instance Main app (Publisher), sistem tetap mudah dikembangkan, namun setiap instance Main app akan memiliki daftar subscriber yang independen. Agar sebuah receiver mendapatkan notifikasi dari semua Main app, receiver tersebut harus mendaftarkan dirinya ke setiap instance Main app secara terpisah.
+
+3. Saya menggunakan Postman secara intensif untuk memverifikasi alur notifikasi pada berbagai port (8001, 8002, dan 8003). Fitur dokumentasi di Postman sangat membantu dalam pengerjaan tutorial maupun proyek kelompok karena mempermudah verifikasi kontrak API antar anggota tim tanpa harus membaca seluruh kode sumber secara manual. Hal ini memastikan bahwa integrasi antar layanan tetap sinkron dan mempercepat proses debugging jika terjadi kegagalan koneksi.
