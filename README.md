@@ -59,14 +59,14 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   Open another new terminal, edit `ROCKET_PORT` in `.env` to `8003`, then execute `cargo run`.
 
 ## Mandatory Checklists (Subscriber)
--   [ ] Clone https://gitlab.com/ichlaffterlalu/bambangshop-receiver to a new repository.
+-   [x] Clone https://gitlab.com/ichlaffterlalu/bambangshop-receiver to a new repository.
 -   **STAGE 1: Implement models and repositories**
-    -   [ ] Commit: `Create Notification model struct.`
-    -   [ ] Commit: `Create SubscriberRequest model struct.`
-    -   [ ] Commit: `Create Notification database and Notification repository struct skeleton.`
-    -   [ ] Commit: `Implement add function in Notification repository.`
-    -   [ ] Commit: `Implement list_all_as_string function in Notification repository.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
+    -   [x] Commit: `Create Notification model struct.`
+    -   [x] Commit: `Create SubscriberRequest model struct.`
+    -   [x] Commit: `Create Notification database and Notification repository struct skeleton.`
+    -   [x] Commit: `Implement add function in Notification repository.`
+    -   [x] Commit: `Implement list_all_as_string function in Notification repository.`
+    -   [x] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 -   **STAGE 3: Implement services and controllers**
     -   [ ] Commit: `Create Notification service struct skeleton.`
     -   [ ] Commit: `Implement subscribe function in Notification service.`
@@ -85,5 +85,8 @@ This is the place for you to write reflections:
 ### Mandatory (Subscriber) Reflections
 
 #### Reflection Subscriber-1
+1. Penggunaan RwLock di aplikasi Receiver ini jauh lebih efisien dibanding Mutex biasa. Alasannya karena aplikasi ini bakal lebih sering read (user ngecek list notifikasi) daripada write (dapat notif baru dari Publisher). Dengan RwLock, banyak user bisa ngebaca data notifikasi barengan tanpa harus ngantri panjang, asalkan pas lagi nggak ada data baru yang ditulis. Kalau pake Mutex, setiap ada yang mau baca doang pun datanya bakal dikunci total buat orang lain.
+
+2. Penggunaan lazy_static ini ibarat bikin "variabel global yang pinter". Kita pakai ini biar database notifikasi (variabel NOTIFICATIONS) cuma dibuat satu kali di memori pas aplikasinya pertama kali jalan. Kalau nggak pake lazy_static, setiap ada request masuk, server mungkin bakal sibuk bikin instance database berulang-ulang dari awal yang ujungnya malah ngereset semua notifikasi yang udah kesimpen sebelumnya.
 
 #### Reflection Subscriber-2
